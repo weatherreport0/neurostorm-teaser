@@ -1,0 +1,21 @@
+{
+  "name": "neurostorm-teaser",
+  "version": "1.1.0",
+  "private": true,
+  "description": "10-second motion design teaser rendered entirely in code: WebGL2 + Canvas 2D + Web Audio",
+  "type": "commonjs",
+  "scripts": {
+    "render": "node render.mjs video 16",
+    "stills": "node render.mjs stills every=15 8",
+    "audio": "node render.mjs audio",
+    "probe": "node render.mjs probe"
+  },
+  "dependencies": {
+    "@fontsource/caveat": "^5.3.0",
+    "@fontsource/dela-gothic-one": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/sofia-sans-extra-condensed": "^5.3.0",
+    "@fontsource/unbounded": "^5.3.0",
+    "puppeteer-core": "^25.12.0"
+  }
+}

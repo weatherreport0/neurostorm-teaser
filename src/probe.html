@@ -1,0 +1,13 @@
+<!doctype html><html><body><canvas id=c width=1920 height=1080></canvas><script>
+(async()=>{
+ const cv=document.getElementById('c'); const gl=cv.getContext('webgl2',{preserveDrawingBuffer:true});
+ gl.clearColor(0.2,0.1,0.5,1); gl.clear(gl.COLOR_BUFFER_BIT);
+ const info={};
+ const px=new Uint8Array(1920*1080*4); for(let i=0;i<px.length;i++) px[i]=(i*7)&255;
+ let t=performance.now(); for(let i=0;i<5;i++) await fetch('/sink',{method:'POST',body:px}); info.post_ab_sink=((performance.now()-t)/5).toFixed(1);
+ t=performance.now(); for(let i=0;i<5;i++) await fetch('/sink',{method:'POST',body:new Blob([px])}); info.post_blob_sink=((performance.now()-t)/5).toFixed(1);
+ t=performance.now(); for(let i=0;i<5;i++){ const b=await new Promise(r=>cv.toBlob(r,'image/png')); info.pngSize=b.size; await fetch('/sink',{method:'POST',body:b}); } info.png_blob=((performance.now()-t)/5).toFixed(1);
+ // websocket
+ await fetch('/done',{method:'POST',body:JSON.stringify(info)});
+})();
+</script></body></html>
